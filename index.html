@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>سازنده کارت پیشرفته</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Vazirmatn', Tahoma, sans-serif;
+    }
+
+    body {
+      background: #f0f2f5;
+      color: #222;
+      padding: 16px;
+      min-height: 100vh;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 1.5rem;
+      margin-bottom: 8px;
+      color: #1a1a1a;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+    }
+
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      margin-bottom: 24px;
+    }
+
+    .section-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+      color: #333;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 6px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    input[type="file"],
+    input[type="text"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      margin-bottom: 16px;
+      font-size: 1rem;
+      background: #fafafa;
+    }
+
+    textarea {
+      height: 90px;
+      resize: vertical;
+    }
+
+    .row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .row > div {
+      flex: 1;
+    }
+
+    input[type="color"] {
+      width: 100%;
+      height: 46px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 4px;
+      background: #fafafa;
+      cursor: pointer;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 6px;
+      transition: 0.2s;
+    }
+
+    .btn-primary {
+      background: #2563eb;
+      color: white;
+    }
+
+    .btn-primary:active {
+      background: #1d4ed8;
+    }
+
+    .btn-success {
+      background: #16a34a;
+      color: white;
+    }
+
+    .btn-success:active {
+      background: #15803d;
+    }
+
+    #preview-section {
+      display: none;
+      text-align: center;
+    }
+
+    #preview-section h2 {
+      margin-bottom: 14px;
+      font-size: 1.2rem;
+    }
+
+    #card-canvas {
+      max-width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      background: white;
+    }
+
+    .size-info {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #666;
+      margin-top: 12px;
+    }
+
+    .hint {
+      font-size: 0.8rem;
+      color: #888;
+      margin-top: -10px;
+      margin-bottom: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>سازنده کارت پیشرفته</h1>
+    <p class="subtitle">طراحی کارت مناسب شبکه‌های اجتماعی</p>
+
+    <!-- بخش تنظیمات -->
+    <div class="card">
+      <div class="section-title">۱. عکس و لوگو</div>
+
+      <label for="photo">انتخاب عکس اصلی</label>
+      <input type="file" id="photo" accept="image/*">
+
+      <label for="logo">لوگو (اختیاری)</label>
+      <input type="file" id="logo" accept="image/*">
+      <p class="hint">لوگو در گوشه پایین سمت چپ قرار می‌گیرد</p>
+    </div>
+
+    <div class="card">
+      <div class="section-title">۲. متن و ظاهر</div>
+
+      <label for="caption">کپشن</label>
+      <textarea id="caption" placeholder="کپشن خود را اینجا بنویسید..."></textarea>
+
+      <label for="size">اندازه کارت</label>
+      <select id="size">
+        <option value="post">پست اینستاگرام (۱۰۸۰×۱۳۵۰) - نسبت ۴:۵</option>
+        <option value="story">استوری (۱۰۸۰×۱۹۲۰) - نسبت ۹:۱۶</option>
+        <option value="square">مربع (۱۰۸۰×۱۰۸۰) - نسبت ۱:۱</option>
+      </select>
+
+      <div class="row">
+        <div>
+          <label for="bgColor">رنگ پس‌زمینه</label>
+          <input type="color" id="bgColor" value="#ffffff">
+        </div>
+        <div>
+          <label for="textColor">رنگ متن</label>
+          <input type="color" id="textColor" value="#1a1a1a">
+        </div>
+      </div>
+
+      <label for="fontFamily">فونت</label>
+      <select id="fontFamily">
+        <option value="Vazirmatn">وزیرمتن (پیشنهادی)</option>
+        <option value="Tahoma">تاهوما</option>
+        <option value="Arial">آریال</option>
+      </select>
+    </div>
+
+    <button class="btn-primary" onclick="generateCard()">ساخت کارت</button>
+
+    <!-- پیش‌نمایش -->
+    <div id="preview-section">
+      <div class="card" style="margin-top: 24px;">
+        <h2>پیش‌نمایش کارت</h2>
+        <canvas id="card-canvas"></canvas>
+        <p class="size-info" id="sizeInfo"></p>
+        <button class="btn-success" onclick="downloadCard()">دانلود کارت (PNG)</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('card-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let mainImage = null;
+    let logoImage = null;
+
+    // بارگذاری عکس اصلی
+    document.getElementById('photo').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const img = new Image();
+        img.onload = () => mainImage = img;
+        img.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // بارگذاری لوگو
+    document.getElementById('logo').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (!file) {
+        logoImage = null;
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const img = new Image();
+        img.onload = () => logoImage = img;
+        img.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    function getSize() {
+      const type = document.getElementById('size').value;
+      if (type === 'story') return { w: 1080, h: 1920, name: 'استوری (۱۰۸۰×۱۹۲۰)' };
+      if (type === 'square') return { w: 1080, h: 1080, name: 'مربع (۱۰۸۰×۱۰۸۰)' };
+      return { w: 1080, h: 1350, name: 'پست اینستاگرام (۱۰۸۰×۱۳۵۰)' };
+    }
+
+    function generateCard() {
+      if (!mainImage) {
+        alert('لطفاً یک عکس انتخاب کنید');
+        return;
+      }
+
+      const caption = document.getElementById('caption').value.trim();
+      if (!caption) {
+        alert('لطفاً کپشن را وارد کنید');
+        return;
+      }
+
+      const size = getSize();
+      canvas.width = size.w;
+      canvas.height = size.h;
+
+      const bgColor = document.getElementById('bgColor').value;
+      const textColor = document.getElementById('textColor').value;
+      const fontFamily = document.getElementById('fontFamily').value;
+
+      // پس‌زمینه
+      ctx.fillStyle = bgColor;
+      ctx.fillRect(0, 0, size.w, size.h);
+
+      // محاسبه فضای عکس و متن
+      const isStory = size.h > 1600;
+      const isSquare = size.w === size.h;
+
+      let imgHeight, textAreaHeight;
+
+      if (isStory) {
+        imgHeight = 1200;
+        textAreaHeight = size.h - imgHeight - 80;
+      } else if (isSquare) {
+        imgHeight = 780;
+        textAreaHeight = size.h - imgHeight - 60;
+      } else {
+        imgHeight = 960;
+        textAreaHeight = size.h - imgHeight - 60;
+      }
+
+      // رسم عکس اصلی (حالت cover)
+      drawImageCover(mainImage, 40, 40, size.w - 80, imgHeight);
+
+      // نوار متن پایین
+      ctx.fillStyle = bgColor === '#ffffff' ? '#f8f9fa' : shadeColor(bgColor, -8);
+      ctx.fillRect(30, imgHeight + 50, size.w - 60, textAreaHeight);
+
+      // کپشن
+      ctx.fillStyle = textColor;
+      ctx.textAlign = 'right';
+      ctx.direction = 'rtl';
+      ctx.font = `bold 44px ${fontFamily}`;
+
+      const maxTextWidth = size.w - 120;
+      const lines = wrapText(caption, maxTextWidth, 44);
+      let y = imgHeight + 120;
+
+      lines.forEach(line => {
+        ctx.fillText(line, size.w - 70, y);
+        y += 58;
+      });
+
+      // تاریخ و ساعت
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('fa-IR');
+      const timeStr = now.toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+
+      ctx.font = `32px ${fontFamily}`;
+      ctx.fillStyle = textColor;
+      ctx.globalAlpha = 0.7;
+      ctx.fillText(dateStr + '  •  ' + timeStr, size.w - 70, size.h - 50);
+      ctx.globalAlpha = 1;
+
+      // لوگو (اگر وجود داشته باشد)
+      if (logoImage) {
+        const logoSize = 90;
+        const logoX = 60;
+        const logoY = size.h - logoSize - 50;
+        ctx.drawImage(logoImage, logoX, logoY, logoSize, logoSize);
+      }
+
+      // نمایش پیش‌نمایش
+      document.getElementById('preview-section').style.display = 'block';
+      document.getElementById('sizeInfo').textContent = 'اندازه: ' + size.name;
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+
+    function drawImageCover(img, x, y, w, h) {
+      const imgRatio = img.width / img.height;
+      const areaRatio = w / h;
+      let sx, sy, sw, sh;
+
+      if (imgRatio > areaRatio) {
+        sh = img.height;
+        sw = img.height * areaRatio;
+        sx = (img.width - sw) / 2;
+        sy = 0;
+      } else {
+        sw = img.width;
+        sh = img.width / areaRatio;
+        sx = 0;
+        sy = (img.height - sh) / 2;
+      }
+      ctx.drawImage(img, sx, sy, sw, sh, x, y, w, h);
+    }
+
+    function wrapText(text, maxWidth, fontSize) {
+      ctx.font = `bold ${fontSize}px ${document.getElementById('fontFamily').value}`;
+      const words = text.split(' ');
+      const lines = [];
+      let currentLine = words[0] || '';
+
+      for (let i = 1; i < words.length; i++) {
+        const testLine = currentLine + ' ' + words[i];
+        if (ctx.measureText(testLine).width > maxWidth) {
+          lines.push(currentLine);
+          currentLine = words[i];
+        } else {
+          currentLine = testLine;
+        }
+      }
+      lines.push(currentLine);
+      return lines.slice(0, 4); // حداکثر ۴ خط
+    }
+
+    // کمی تیره‌تر کردن رنگ
+    function shadeColor(color, percent) {
+      const num = parseInt(color.replace('#', ''), 16);
+      const amt = Math.round(2.55 * percent);
+      const R = (num >> 16) + amt;
+      const G = (num >> 8 & 0x00FF) + amt;
+      const B = (num & 0x0000FF) + amt;
+      return '#' + (
+        0x1000000 +
+        (R < 255 ? (R < 1 ? 0 : R) : 255) * 0x10000 +
+        (G < 255 ? (G < 1 ? 0 : G) : 255) * 0x100 +
+        (B < 255 ? (B < 1 ? 0 : B) : 255)
+      ).toString(16).slice(1);
+    }
+
+    function downloadCard() {
+      const link = document.createElement('a');
+      const size = getSize();
+      link.download = `kart-${size.w}x${size.h}-${Date.now()}.png`;
+      link.href = canvas.toDataURL('image/png', 1.0);
+      link.click();
+    }
+  </script>
+</body>
+</html>
